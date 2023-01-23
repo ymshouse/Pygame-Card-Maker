@@ -51,7 +51,7 @@ def card_selection_screen():
     screen.blit(img, (0, 0))
     pygame.display.flip()
     image_index = user_key_input()
-    card = make_card_screen(images.get(image_index))
+    card = make_card_screen(images.get(image_index),songs.get(image_index))
     return card
 
 
@@ -61,13 +61,18 @@ def picture_resize(pic_name):
     return picture
 
 
-def make_card_screen(image_name):
+def make_card_screen(image_name,song_name):
     full_size = (640, 480)
     screen = pygame.display.set_mode(full_size)
     print(image_name)
+    print(song_name)
     bg_image = pygame.image.load(image_name)
     screen.blit(bg_image, (0, 0))
 
+    #playing songs
+    song = pygame.mixer.Sound(song_name)
+    song.set_volume(0.3)
+    song.play()
     # creating sender box
     sender_value = "To:"
     sender_field_surf = pygame.Surface((300, 50)).convert()
@@ -166,6 +171,7 @@ def make_card_screen(image_name):
         card = (image_name, sender_value, greeting_value, receiver_value)
         # cards.append(card)
         print(card)
+        song.stop()
         return card
         # view_card(image_name, sender_value, greeting_value, receiver_value)
 
